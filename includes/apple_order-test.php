@@ -1,5 +1,5 @@
 <?php
-session_start(); 
+session_start();
 include '../config/DBconnect.php'; // Đảm bảo kết nối CSDL
 
 
@@ -87,7 +87,7 @@ $stmt->close();
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-left:100px ;
+            margin-left: 100px;
             margin-right: 80px;
         }
 
@@ -286,6 +286,7 @@ $stmt->close();
             background-color: #004599;
             transform: scale(0.98);
         }
+
         footer {
             padding-left: 50px;
             padding-right: 50px;
@@ -297,6 +298,77 @@ $stmt->close();
         footer a {
             color: black;
             text-decoration: none;
+        }
+
+        /* search */
+        .search-box {
+            position: absolute;
+            top: 7px;
+            right: -250px;
+            /* Ẩn ngoài màn hình */
+            transition: right 0.3s ease-in-out;
+            min-width: 300px;
+            border-radius: 20px !important;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .search-box.active {
+            right: 155px;
+            transform: translateX(0);
+            /* Hiện ra khi có class 'active' */
+        }
+
+        #search-results {
+            list-style-type: none;
+            /* Xóa dấu chấm */
+            padding: 0;
+            margin: 5px 0;
+            background: white;
+            border: 1px solid #ddd;
+            max-width: 400px;
+            position: absolute;
+            top: 50px;
+            right: 85px;
+            z-index: 1000;
+            display: none;
+            border-radius: 10px;
+        }
+
+        .search-item {
+            max-width: 420px;
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+
+        .search-item:hover {
+            background: #f1f1f1;
+        }
+
+        .search-image {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .search-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .search-name {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .search-price {
+            font-size: 17px;
+            color: #888;
         }
     </style>
 </head>
@@ -433,7 +505,8 @@ $stmt->close();
                                 </ul>
                                 <ul>
                                     <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Mua iPhone</li>
-                                    <li class="li-row" onclick="location.href='apple_mua-iphone.php'" style="cursor: pointer;">Mua iPhone</li>
+                                    <li class="li-row" onclick="location.href='apple_mua-iphone.php'"
+                                        style="cursor: pointer;">Mua iPhone</li>
                                     <li class="li-row">Phụ Kiện iPhone</li>
                                     <li class="li-row">Apple Trade In </li>
                                     <li class="li-row">Tài Chính</li>
@@ -627,6 +700,7 @@ $stmt->close();
                                     <li class="li-row">Cộng Đồng</li>
                                     <li class="li-row">Kiểm Tra Bảo Hành</li>
                                     <li class="li-row">Sửa Chữa</li>
+                                    <li class="li-row" onclick="location.href='apple_statistics.php'" >Thống Kê</li>
                                 </ul>
                                 <ul>
                                     <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;"> Chủ Đề Hữu Ích
@@ -641,9 +715,18 @@ $stmt->close();
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a href="#" class="nav-link"><i
-                                class="fa-solid fa-magnifying-glass fa-lg"></i></a></li>
-                    <li class="nav-item"><a href="apple_bag.php" class="nav-link"><i class="fa-solid fa-bag-shopping fa-lg"></i></a>
+                    <ul style="list-style-type: none;">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link search-icon"><i
+                                    class="fa-solid fa-magnifying-glass fa-lg"></i></a>
+                        </li>
+                        <li class="nav-item search-box">
+                            <input type="text" id="search-input" class="form-control"
+                                placeholder="Tìm kiếm sản phẩm...">
+                        </li>
+                    </ul>
+                    <li class="nav-item"><a href="apple_bag.php" class="nav-link"><i
+                                class="fa-solid fa-bag-shopping fa-lg"></i></a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -667,6 +750,7 @@ $stmt->close();
             </div>
         </div>
     </nav>
+    <ul id="search-results"></ul>
 
     <div class="deals-container">
         <div class="deal-info">
@@ -707,7 +791,8 @@ $stmt->close();
             </div>
         </div>
         <div class="offer-buttons">
-            <button class="offer-button" style="width:300px; margin-left: 50px; ">Get $40–$630 for your trade-in. ➕</button>
+            <button class="offer-button" style="width:300px; margin-left: 50px; ">Get $40–$630 for your trade-in.
+                ➕</button>
             <button class="offer-button">Get 3% Daily Cash back with Apple Card. ➕</button>
         </div>
     </div>
@@ -760,7 +845,7 @@ $stmt->close();
                     <strong><?php echo htmlspecialchars($product["name"]); ?></strong>
                     <p>6.9-inch display</p>
                 </div>
-                <div style="width:40%"> 
+                <div style="width:40%">
                     <p>From $1199 or $49.95/mo for 24 mo.*</p>
                 </div>
             </div>
@@ -879,62 +964,62 @@ $stmt->close();
     <?php
     $conn->close();
     ?>
-<script>
-    const username = "<?php echo isset($_SESSION['user_name']) ? $_SESSION['user_name'] : ''; ?>";
-    const email = "<?php echo isset($_SESSION['email']) ? $_SESSION['email'] : ''; ?>";
-</script>
+    <script>
+        const username = "<?php echo isset($_SESSION['user_name']) ? $_SESSION['user_name'] : ''; ?>";
+        const email = "<?php echo isset($_SESSION['email']) ? $_SESSION['email'] : ''; ?>";
+    </script>
 
     <script>
-     document.addEventListener("DOMContentLoaded", function() {
-    function selectCard(cards, selectedClass) {
-        cards.forEach(card => {
-            card.addEventListener("click", function() {
-                cards.forEach(c => c.classList.remove(selectedClass));
-                this.classList.add(selectedClass);
-            });
-        });
-    }
-    selectCard(document.querySelectorAll(".model-card"), "selected");
-    selectCard(document.querySelectorAll(".storage-card"), "selected");
-    selectCard(document.querySelectorAll(".color-circle"), "selected");
-    selectCard(document.querySelectorAll(".trade-card"), "selected");
-    selectCard(document.querySelectorAll(".payment-card"), "selected");
-
-    // **Đảm bảo TOÀN BỘ mã xử lý sự kiện click nằm trong DOMContentLoaded**
-    const buyButton = document.querySelector(".buy-button"); // Lấy phần tử buy-button
-
-    if (buyButton) { // Kiểm tra xem buyButton có tồn tại không.
-        buyButton.addEventListener("click", function() {
-            let selectedModel = document.querySelector(".model-card.selected");
-            let selectedStorage = document.querySelector(".storage-card.selected");
-            let selectedColor = document.querySelector(".color-circle.selected");
-
-            if (!selectedModel || !selectedStorage || !selectedColor) {
-                alert("Vui lòng chọn đầy đủ thông tin sản phẩm trước khi mua.");
-                return;
+        document.addEventListener("DOMContentLoaded", function () {
+            function selectCard(cards, selectedClass) {
+                cards.forEach(card => {
+                    card.addEventListener("click", function () {
+                        cards.forEach(c => c.classList.remove(selectedClass));
+                        this.classList.add(selectedClass);
+                    });
+                });
             }
+            selectCard(document.querySelectorAll(".model-card"), "selected");
+            selectCard(document.querySelectorAll(".storage-card"), "selected");
+            selectCard(document.querySelectorAll(".color-circle"), "selected");
+            selectCard(document.querySelectorAll(".trade-card"), "selected");
+            selectCard(document.querySelectorAll(".payment-card"), "selected");
 
-            // trích xuất dữ liệu thẻ chọn
-            let productName = selectedModel.querySelector("strong").innerText;
-            let productPrice = selectedModel.innerText.split("From ")[1]?.trim() || "0";
-            let productStorage = selectedStorage.querySelector("strong").innerText;
-            let productColor = selectedColor.style.backgroundColor;
-            let imageUrl = document.querySelector(".rf-bfe-column-left img").src;
+            // **Đảm bảo TOÀN BỘ mã xử lý sự kiện click nằm trong DOMContentLoaded**
+            const buyButton = document.querySelector(".buy-button"); // Lấy phần tử buy-button
 
-            console.log("Username:", username);
-            console.log("Email:", email);
-            console.log("Tên:", productName);
-            console.log("Giá:", productPrice);
-            console.log("Dung lượng:", productStorage);
-            console.log("Màu:", productColor);
-            console.log("Ảnh:", imageUrl);
+            if (buyButton) { // Kiểm tra xem buyButton có tồn tại không.
+                buyButton.addEventListener("click", function () {
+                    let selectedModel = document.querySelector(".model-card.selected");
+                    let selectedStorage = document.querySelector(".storage-card.selected");
+                    let selectedColor = document.querySelector(".color-circle.selected");
 
-            // gửi dữ liệu qua form ẩn
-            let form = document.createElement("form");
-            form.method = "POST";
-            form.action = "apple_process-order.php";
+                    if (!selectedModel || !selectedStorage || !selectedColor) {
+                        alert("Vui lòng chọn đầy đủ thông tin sản phẩm trước khi mua.");
+                        return;
+                    }
 
-            form.innerHTML = `
+                    // trích xuất dữ liệu thẻ chọn
+                    let productName = selectedModel.querySelector("strong").innerText;
+                    let productPrice = selectedModel.innerText.split("From ")[1]?.trim() || "0";
+                    let productStorage = selectedStorage.querySelector("strong").innerText;
+                    let productColor = selectedColor.style.backgroundColor;
+                    let imageUrl = document.querySelector(".rf-bfe-column-left img").src;
+
+                    console.log("Username:", username);
+                    console.log("Email:", email);
+                    console.log("Tên:", productName);
+                    console.log("Giá:", productPrice);
+                    console.log("Dung lượng:", productStorage);
+                    console.log("Màu:", productColor);
+                    console.log("Ảnh:", imageUrl);
+
+                    // gửi dữ liệu qua form ẩn
+                    let form = document.createElement("form");
+                    form.method = "POST";
+                    form.action = "apple_process-order.php";
+
+                    form.innerHTML = `
                 <input type="hidden" name="username" value="${username}">
                 <input type="hidden" name="email" value="${email}">
                 <input type="hidden" name="name" value="${productName}">
@@ -944,13 +1029,66 @@ $stmt->close();
                 <input type="hidden" name="image_url" value="${imageUrl}">
             `;
 
-            document.body.appendChild(form);
-            form.submit();
+                    document.body.appendChild(form);
+                    form.submit();
+                });
+            } else {
+                console.error("Không tìm thấy phần tử có class 'buy-button'");
+            }
         });
-    } else {
-        console.error("Không tìm thấy phần tử có class 'buy-button'");
-    }
-});
+    </script>
+
+    <script>
+        document.querySelector(".search-icon").addEventListener("click", function (e) {
+            e.preventDefault();
+            document.querySelector(".search-box").classList.toggle("active");
+        });
+
+        document.getElementById("search-input").addEventListener("input", function () {
+            let keyword = this.value.trim();
+            let resultsContainer = document.getElementById("search-results");
+
+            if (keyword.length > 1) {
+                fetch(`apple_search.php?query=${encodeURIComponent(keyword)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.length > 0) {
+                            let resultHTML = data.map(p => `
+                        <li class="search-item" data-id="${p.id}" style="">
+                            <img src="${p.image_url}" alt="${p.name}" class="search-image" style="">
+                            <div class="search-info">
+                                <span class="search-name">${p.name}</span>
+                                <span class="search-price">${p.price}đ</span>
+                            </div>
+                        </li>
+                    `).join("");
+
+                            resultsContainer.innerHTML = resultHTML;
+                            resultsContainer.style.display = "block";
+
+                            // Thêm sự kiện click vào mỗi item để điều hướng
+                            document.querySelectorAll(".search-item").forEach(item => {
+                                item.addEventListener("click", function () {
+                                    let productId = this.getAttribute("data-id");
+                                    window.location.href = `apple_order-test.php?id=${productId}`;
+                                });
+                            });
+
+                        } else {
+                            resultsContainer.innerHTML = "<li>Không tìm thấy sản phẩm</li>";
+                            resultsContainer.style.display = "block";
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Lỗi:", error);
+                        resultsContainer.innerHTML = "<li>Có lỗi xảy ra!</li>";
+                        resultsContainer.style.display = "block";
+                    });
+            } else {
+                resultsContainer.innerHTML = "";
+                resultsContainer.style.display = "none";
+            }
+        });
     </script>
 </body>
 

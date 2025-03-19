@@ -125,6 +125,76 @@ footer a {
     color: black;
     text-decoration: none;
 }
+/* search */
+.search-box {
+            position: absolute;
+            top: 7px;
+            right: -250px;
+            /* Ẩn ngoài màn hình */
+            transition: right 0.3s ease-in-out;
+            min-width: 300px;
+            border-radius: 20px !important;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .search-box.active {
+            right: 165px;
+            transform: translateX(0);
+            /* Hiện ra khi có class 'active' */
+        }
+
+        #search-results {
+            list-style-type: none;
+            /* Xóa dấu chấm */
+            padding: 0;
+            margin: 5px 0;
+            background: white;
+            border: 1px solid #ddd;
+            max-width: 400px;
+            position: absolute;
+            top: 50px;
+            right: 85px;
+            z-index: 1000;
+            display: none;
+            border-radius: 10px;
+        }
+
+        .search-item {
+            max-width: 420px;
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+
+        .search-item:hover {
+            background: #f1f1f1;
+        }
+
+        .search-image {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .search-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .search-name {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .search-price {
+            font-size: 17px;
+            color: #888;
+        }
     </style>
 </head>
 <body>
@@ -440,6 +510,7 @@ footer a {
                                     <li class="li-row">Cộng Đồng</li>
                                     <li class="li-row">Kiểm Tra Bảo Hành</li>
                                     <li class="li-row">Sửa Chữa</li>
+                                    <li class="li-row" onclick="location.href='apple_statistics.php'" >Thống Kê</li>
                                 </ul>
                                 <ul>
                                     <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;"> Chủ Đề Hữu Ích</li>
@@ -453,9 +524,18 @@ footer a {
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a href="#" class="nav-link"><i
-                                class="fa-solid fa-magnifying-glass fa-lg"></i></a></li>
-                    <li class="nav-item"><a href="apple_bag.php" class="nav-link"><i class="fa-solid fa-bag-shopping fa-lg"></i></a>
+                    <ul style="list-style-type: none;">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link search-icon"><i
+                                    class="fa-solid fa-magnifying-glass fa-lg"></i></a>
+                        </li>
+                        <li class="nav-item search-box">
+                            <input type="text" id="search-input" class="form-control"
+                                placeholder="Tìm kiếm sản phẩm...">
+                        </li>
+                    </ul>
+                    <li class="nav-item"><a href="apple_bag.php" class="nav-link"><i
+                                class="fa-solid fa-bag-shopping fa-lg"></i></a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -478,7 +558,8 @@ footer a {
                 </ul>
             </div>
         </div>
-  </nav>
+    </nav>
+    <ul id="search-results"></ul>
   <h5 style="font-weight: bold; padding-left: 300px; padding-top: 10px;">Thêm Sản Phẩm </h5>
 
   <div class="banner">
@@ -528,5 +609,57 @@ footer a {
         <p><a href="">Chính Sách Quyền Riêng Tư</a> | <a href="">Điều Khoản Sử Dụng</a> | <a href="">Bán Hàng Và Hoàn
                 Tiền</a> | <a href="">Pháp Lý</a> | <a href="">Bản Đồ Trang Web</a></p>
     </footer>
+    <script>
+        document.querySelector(".search-icon").addEventListener("click", function (e) {
+            e.preventDefault();
+            document.querySelector(".search-box").classList.toggle("active");
+        });
+
+        document.getElementById("search-input").addEventListener("input", function () {
+            let keyword = this.value.trim();
+            let resultsContainer = document.getElementById("search-results");
+
+            if (keyword.length > 1) {
+                fetch(`apple_search.php?query=${encodeURIComponent(keyword)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.length > 0) {
+                            let resultHTML = data.map(p => `
+                        <li class="search-item" data-id="${p.id}" style="">
+                            <img src="${p.image_url}" alt="${p.name}" class="search-image" style="">
+                            <div class="search-info">
+                                <span class="search-name">${p.name}</span>
+                                <span class="search-price">${p.price}đ</span>
+                            </div>
+                        </li>
+                    `).join("");
+
+                            resultsContainer.innerHTML = resultHTML;
+                            resultsContainer.style.display = "block";
+
+                            // Thêm sự kiện click vào mỗi item để điều hướng
+                            document.querySelectorAll(".search-item").forEach(item => {
+                                item.addEventListener("click", function () {
+                                    let productId = this.getAttribute("data-id");
+                                    window.location.href = `apple_order-test.php?id=${productId}`;
+                                });
+                            });
+
+                        } else {
+                            resultsContainer.innerHTML = "<li>Không tìm thấy sản phẩm</li>";
+                            resultsContainer.style.display = "block";
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Lỗi:", error);
+                        resultsContainer.innerHTML = "<li>Có lỗi xảy ra!</li>";
+                        resultsContainer.style.display = "block";
+                    });
+            } else {
+                resultsContainer.innerHTML = "";
+                resultsContainer.style.display = "none";
+            }
+        });
+    </script>
 </body>
 </html>

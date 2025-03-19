@@ -18,12 +18,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_name'] = $user['firstname'] . ' ' . $user['lastname'];
             $_SESSION['email'] = $email;
             $_SESSION['role'] = $user['role'];
-        
+
             $_SESSION['success'] = "Đăng nhập thành công!";
             header("Location: apple_home.php");
             exit();
-        }
-         else {
+        } else {
             $_SESSION['error'] = "Mật khẩu không đúng!";
         }
     } else {
@@ -48,21 +47,93 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../assets/css/apple_login-styles.css">
     <style>
-    .remember-me {
-       display: flex;
-       justify-content: space-between;
-       gap: 8px;
-       margin-bottom: 10px;  
-    }
-    .login-container {
-       width: 400px;
-       margin: 50px auto;
-       background: #f9f9f9;
-       padding: 20px;
-       border-radius: 10px;
-       text-align: center;
-       margin-bottom: 50px;
-    }
+        .remember-me {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .login-container {
+            width: 400px;
+            margin: 50px auto;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        /* search */
+        .search-box {
+            position: absolute;
+            top: 7px;
+            right: -250px;
+            /* Ẩn ngoài màn hình */
+            transition: right 0.3s ease-in-out;
+            min-width: 300px;
+            border-radius: 20px !important;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .search-box.active {
+            right: 130px;
+            transform: translateX(0);
+            /* Hiện ra khi có class 'active' */
+        }
+
+        #search-results {
+            list-style-type: none;
+            /* Xóa dấu chấm */
+            padding: 0;
+            margin: 5px 0;
+            background: white;
+            border: 1px solid #ddd;
+            max-width: 400px;
+            position: absolute;
+            top: 50px;
+            right: 85px;
+            z-index: 1000;
+            display: none;
+            border-radius: 10px;
+        }
+
+        .search-item {
+            max-width: 420px;
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+
+        .search-item:hover {
+            background: #f1f1f1;
+        }
+
+        .search-image {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .search-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .search-name {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .search-price {
+            font-size: 17px;
+            color: #888;
+        }
     </style>
 </head>
 
@@ -198,7 +269,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </ul>
                                 <ul>
                                     <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Mua iPhone</li>
-                                    <li class="li-row" onclick="location.href='apple_mua-iphone.php'" style="cursor: pointer;">Mua iPhone</li>
+                                    <li class="li-row" onclick="location.href='apple_mua-iphone.php'"
+                                        style="cursor: pointer;">Mua iPhone</li>
                                     <li class="li-row">Phụ Kiện iPhone</li>
                                     <li class="li-row">Apple Trade In </li>
                                     <li class="li-row">Tài Chính</li>
@@ -392,6 +464,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <li class="li-row">Cộng Đồng</li>
                                     <li class="li-row">Kiểm Tra Bảo Hành</li>
                                     <li class="li-row">Sửa Chữa</li>
+                                    <li class="li-row" onclick="location.href='apple_statistics.php'" >Thống Kê</li>
                                 </ul>
                                 <ul>
                                     <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;"> Chủ Đề Hữu Ích
@@ -406,9 +479,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a href="#" class="nav-link"><i
-                                class="fa-solid fa-magnifying-glass fa-lg"></i></a></li>
-                    <li class="nav-item"><a href="apple_bag.php" class="nav-link"><i class="fa-solid fa-bag-shopping fa-lg"></i></a>
+                    <ul style="list-style-type: none;">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link search-icon"><i
+                                    class="fa-solid fa-magnifying-glass fa-lg"></i></a>
+                        </li>
+                        <li class="nav-item search-box">
+                            <input type="text" id="search-input" class="form-control"
+                                placeholder="Tìm kiếm sản phẩm...">
+                        </li>
+                    </ul>
+                    <li class="nav-item"><a href="apple_bag.php" class="nav-link"><i
+                                class="fa-solid fa-bag-shopping fa-lg"></i></a>
                     </li>
                 </ul>
                 <ul>
@@ -417,6 +499,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </nav>
+    <ul id="search-results"></ul>
     <div class="header-container">
         <h3 style="font-size: 25px"><b>Apple Account</b></h3>
         <div class="nav-menu">
@@ -448,22 +531,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form action="apple_login.php" method="POST">
                 <div class="mb-3">
                     <div class="col">
-                        <input style=" border-radius:20px"  type="email" class="form-control" name="email" placeholder="Email" required>
+                        <input style=" border-radius:20px" type="email" class="form-control" name="email"
+                            placeholder="Email" required>
                     </div>
                 </div>
                 <div class="mb-3">
                     <div>
-                        <input style=" border-radius:20px"  type="password" class="form-control" name="password" placeholder="Mật khẩu" required>
+                        <input style=" border-radius:20px" type="password" class="form-control" name="password"
+                            placeholder="Mật khẩu" required>
                     </div>
                 </div>
                 <div class="remember-me" style="padding-left: 10px;">
                     <div style="text-align:left">
-                       <input style=" border-radius:20px"  type="checkbox" id="remember">
-                    <label for="remember">Lưu tôi</label> 
+                        <input style=" border-radius:20px" type="checkbox" id="remember">
+                        <label for="remember">Lưu tôi</label>
                     </div>
-                    
+
                     <div>
-                       <a href="apple_reset-password.php" class="text-primary">Bạn đã quên mật khẩu?</a>
+                        <a href="apple_reset-password.php" class="text-primary">Bạn đã quên mật khẩu?</a>
                     </div>
                 </div>
                 <br>
@@ -479,17 +564,71 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
     <hr>
-    <h5 style="padding-left:290px">Bạn cần hỗ trợ thêm? <a href="">Chat ngay</a>(Mở trong cửa sổ mới) hoặc gọi 1800-1192.</h5>
+    <h5 style="padding-left:290px">Bạn cần hỗ trợ thêm? <a href="">Chat ngay</a>(Mở trong cửa sổ mới) hoặc gọi
+        1800-1192.</h5>
     <hr style="margin-bottom:0px">
     <footer>
         <p>Giá hiển thị đã bao gồm tất cả các khoản thuế. Giao hàng miễn phí cho tất cả đơn hàng.</p>
-        <p>Apple Store Trực Tuyến sử dụng công nghệ mã hóa chuẩn ngành để bảo vệ tính bảo mật của thông tin do bạn gửi. Tìm hiểu thêm về <a href="">Chính Sách Bảo Mật</a>  của chúng tôi (mở trong cửa sổ mới).</p>
+        <p>Apple Store Trực Tuyến sử dụng công nghệ mã hóa chuẩn ngành để bảo vệ tính bảo mật của thông tin do bạn gửi.
+            Tìm hiểu thêm về <a href="">Chính Sách Bảo Mật</a> của chúng tôi (mở trong cửa sổ mới).</p>
         <hr>
         <p>Xem thêm cách để mua hàng: Tìm cửa hàng bán lẻ gần bạn. Hoặc gọi <u>1800-1192</u> .</p>
         <p>Bản quyền © 2025 Apple Inc. Bảo lưu mọi quyền.</p>
         <p><a href="">Chính Sách Quyền Riêng Tư</a> | <a href="">Điều Khoản Sử Dụng</a> | <a href="">Bán Hàng Và Hoàn
                 Tiền</a> | <a href="">Pháp Lý</a> | <a href="">Bản Đồ Trang Web</a></p>
     </footer>
+    <script>
+        document.querySelector(".search-icon").addEventListener("click", function (e) {
+            e.preventDefault();
+            document.querySelector(".search-box").classList.toggle("active");
+        });
+
+        document.getElementById("search-input").addEventListener("input", function () {
+            let keyword = this.value.trim();
+            let resultsContainer = document.getElementById("search-results");
+
+            if (keyword.length > 1) {
+                fetch(`apple_search.php?query=${encodeURIComponent(keyword)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.length > 0) {
+                            let resultHTML = data.map(p => `
+                        <li class="search-item" data-id="${p.id}" style="">
+                            <img src="${p.image_url}" alt="${p.name}" class="search-image" style="">
+                            <div class="search-info">
+                                <span class="search-name">${p.name}</span>
+                                <span class="search-price">${p.price}đ</span>
+                            </div>
+                        </li>
+                    `).join("");
+
+                            resultsContainer.innerHTML = resultHTML;
+                            resultsContainer.style.display = "block";
+
+                            // Thêm sự kiện click vào mỗi item để điều hướng
+                            document.querySelectorAll(".search-item").forEach(item => {
+                                item.addEventListener("click", function () {
+                                    let productId = this.getAttribute("data-id");
+                                    window.location.href = `apple_order-test.php?id=${productId}`;
+                                });
+                            });
+
+                        } else {
+                            resultsContainer.innerHTML = "<li>Không tìm thấy sản phẩm</li>";
+                            resultsContainer.style.display = "block";
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Lỗi:", error);
+                        resultsContainer.innerHTML = "<li>Có lỗi xảy ra!</li>";
+                        resultsContainer.style.display = "block";
+                    });
+            } else {
+                resultsContainer.innerHTML = "";
+                resultsContainer.style.display = "none";
+            }
+        });
+    </script>
 </body>
 
 </html>

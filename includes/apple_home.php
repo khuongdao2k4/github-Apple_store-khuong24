@@ -1,7 +1,8 @@
-<?php session_start();?>
+<?php session_start(); ?>
 
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,18 +16,91 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
         integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* search */
+        .search-box {
+            position: absolute;
+            top: 7px;
+            right: -250px;
+            /* Ẩn ngoài màn hình */
+            transition: right 0.3s ease-in-out;
+            min-width: 300px;
+            border-radius: 20px !important;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .search-box.active {
+            right: 155px;
+            transform: translateX(0);
+            /* Hiện ra khi có class 'active' */
+        }
+
+        #search-results {
+            list-style-type: none;
+            /* Xóa dấu chấm */
+            padding: 0;
+            margin: 5px 0;
+            background: white;
+            border: 1px solid #ddd;
+            max-width: 400px;
+            position: absolute;
+            top: 50px;
+            right: 85px;
+            z-index: 1000;
+            display: none;
+            border-radius: 10px;
+        }
+
+        .search-item {
+            max-width: 420px;
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+
+        .search-item:hover {
+            background: #f1f1f1;
+        }
+
+        .search-image {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .search-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .search-name {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .search-price {
+            font-size: 17px;
+            color: #888;
+        }
+    </style>
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg fixed-top" style="">
+    <nav class="navbar navbar-expand-lg fixed-top" style="">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item"; style="padding: 0px 10px"><a class="nav-link" href="apple_home.php"><i class="fa-brands fa-apple fa-xl"></i></a></li>
-                    <li class="nav-item"; style="padding: 0px 10px"><a class="nav-link" href="#">Cửa Hàng</a>
+                    <li class="nav-item" ; style="padding: 0px 10px"><a class="nav-link" href="apple_home.php"><i
+                                class="fa-brands fa-apple fa-xl"></i></a></li>
+                    <li class="nav-item" ; style="padding: 0px 10px"><a class="nav-link" href="#">Cửa Hàng</a>
                         <div class="submenu-container">
                             <div class="submenu">
                                 <ul>
@@ -54,7 +128,7 @@
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item"; style="padding: 0px 10px"><a class="nav-link" href="apple_mac.php">Mac</a>
+                    <li class="nav-item" ; style="padding: 0px 10px"><a class="nav-link" href="apple_mac.php">Mac</a>
                         <div class="submenu-container">
                             <div class="submenu">
                                 <ul>
@@ -94,7 +168,7 @@
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item"; style="padding: 0px 10px"><a class="nav-link" href="#">iPad</a>
+                    <li class="nav-item" ; style="padding: 0px 10px"><a class="nav-link" href="#">iPad</a>
                         <div class="submenu-container">
                             <div class="submenu">
                                 <ul>
@@ -131,7 +205,8 @@
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item"; style="padding: 0px 10px"><a class="nav-link" href="apple_store.php">iPhone</a>
+                    <li class="nav-item" ; style="padding: 0px 10px"><a class="nav-link"
+                            href="apple_store.php">iPhone</a>
                         <div class="submenu-container">
                             <div class="submenu">
                                 <ul>
@@ -147,7 +222,8 @@
                                 </ul>
                                 <ul>
                                     <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Mua iPhone</li>
-                                    <li class="li-row" onclick="location.href='apple_mua-iphone.php'" style="cursor: pointer;">Mua iPhone</li>
+                                    <li class="li-row" onclick="location.href='apple_mua-iphone.php'"
+                                        style="cursor: pointer;">Mua iPhone</li>
                                     <li class="li-row">Phụ Kiện iPhone</li>
                                     <li class="li-row">Apple Trade In </li>
                                     <li class="li-row">Tài Chính</li>
@@ -167,11 +243,12 @@
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item"; style="padding: 0px 10px"><a class="nav-link" href="#">Watch</a>
-                    <div class="submenu-container">
+                    <li class="nav-item" ; style="padding: 0px 10px"><a class="nav-link" href="#">Watch</a>
+                        <div class="submenu-container">
                             <div class="submenu">
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá Watch</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá Watch
+                                    </li>
                                     <li class="li-rowh">Khám Phá Tất Cả Apple Watch</li>
                                     <li class="li-rowh">Apple Watch Series 10</li>
                                     <li class="li-rowh">Apple Watch Ultra 2</li>
@@ -190,7 +267,8 @@
                                     <li class="li-row">Tài Chính</li>
                                 </ul>
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Tìm Hiểu Thêm Về Watch</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Tìm Hiểu Thêm Về
+                                        Watch</li>
                                     <li class="li-row">Hỗ Trợ Watch</li>
                                     <li class="li-row">AppleCare+</li>
                                     <li class="li-row">watchOS 11</li>
@@ -199,11 +277,12 @@
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item"; style="padding: 0px 10px"><a class="nav-link" href="#">AirPods</a>
-                    <div class="submenu-container">
+                    <li class="nav-item" ; style="padding: 0px 10px"><a class="nav-link" href="#">AirPods</a>
+                        <div class="submenu-container">
                             <div class="submenu">
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá AirPods</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá AirPods
+                                    </li>
                                     <li class="li-rowh">Khám Phá Tất Cả AirPods</li>
                                     <li class="li-rowh">AirPods 4</li>
                                     <li class="li-rowh">AirPods Pro 2</li>
@@ -216,7 +295,8 @@
                                     <li class="li-row">Phụ Kiện AirPods</li>
                                 </ul>
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Tìm Hiểu Thêm Về AirPods</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Tìm Hiểu Thêm Về
+                                        AirPods</li>
                                     <li class="li-row">Hỗ Trợ AirPods</li>
                                     <li class="li-row">AppleCare+ cho Tai Nghe</li>
                                     <li class="li-row">Apple Music</li>
@@ -224,21 +304,24 @@
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item"; style="padding: 0px 10px"><a class="nav-link" href="#">TV & Nhà</a>
-                    <div class="submenu-container">
+                    <li class="nav-item" ; style="padding: 0px 10px"><a class="nav-link" href="#">TV & Nhà</a>
+                        <div class="submenu-container">
                             <div class="submenu">
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá TV & Nhà</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá TV &
+                                        Nhà</li>
                                     <li class="li-rowh">Khám Phá TV & Nhà</li>
                                     <li class="li-rowh">Apple TV 4K</li>
                                 </ul>
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Mua TV & Nhà</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Mua TV & Nhà
+                                    </li>
                                     <li class="li-row">Mua Apple TV 4K</li>
                                     <li class="li-row">Mua Phụ Kiện TV & Nhà</li>
                                 </ul>
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Tìm Hiểu Thêm Về TV & Nhà</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Tìm Hiểu Thêm Về
+                                        TV & Nhà</li>
                                     <li class="li-row">Hỗ Trợ Apple TV</li>
                                     <li class="li-row">AppleCare+</li>
                                     <li class="li-row">Ứng Dụng Apple TV</li>
@@ -249,11 +332,12 @@
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item"; style="padding: 0px 10px"><a class="nav-link" href="#">Giải Trí</a>
-                    <div class="submenu-container">
+                    <li class="nav-item" ; style="padding: 0px 10px"><a class="nav-link" href="#">Giải Trí</a>
+                        <div class="submenu-container">
                             <div class="submenu">
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá Giải Trí</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá Giải
+                                        Trí</li>
                                     <li class="li-rowh">Khám Phá Giải Trí</li>
                                     <li class="li-rowh">Apple One</li>
                                     <li class="li-rowh">Apple TV+</li>
@@ -280,11 +364,12 @@
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item"; style="padding: 0px 10px"><a class="nav-link" href="#">Phụ Kiện</a>
-                    <div class="submenu-container">
+                    <li class="nav-item" ; style="padding: 0px 10px"><a class="nav-link" href="#">Phụ Kiện</a>
+                        <div class="submenu-container">
                             <div class="submenu">
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Mua Phụ Kiện</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Mua Phụ Kiện
+                                    </li>
                                     <li class="li-rowh">Mua Tất Cả Phụ Kiện</li>
                                     <li class="li-rowh">Mac</li>
                                     <li class="li-rowh">iPad</li>
@@ -294,7 +379,8 @@
                                     <li class="li-rowh">TV & Nhà</li>
                                 </ul>
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá Phụ Kiện</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá Phụ
+                                        Kiện</li>
                                     <li class="li-row">Sản Xuất Bởi Apple</li>
                                     <li class="li-row">Beats by Dr. Dre</li>
                                     <li class="li-row">AirTag</li>
@@ -311,11 +397,12 @@
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item"; style="padding: 0px 10px"><a class="nav-link" href="#">Hỗ Trợ</a>
-                    <div class="submenu-container">
+                    <li class="nav-item" ; style="padding: 0px 10px"><a class="nav-link" href="#">Hỗ Trợ</a>
+                        <div class="submenu-container">
                             <div class="submenu">
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá Hỗ Trợ</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá Hỗ Trợ
+                                    </li>
                                     <li class="li-rowh">iPhone</li>
                                     <li class="li-rowh">Mac</li>
                                     <li class="li-rowh">iPad</li>
@@ -330,9 +417,11 @@
                                     <li class="li-row">Cộng Đồng</li>
                                     <li class="li-row">Kiểm Tra Bảo Hành</li>
                                     <li class="li-row">Sửa Chữa</li>
+                                    <li class="li-row" onclick="location.href='apple_statistics.php'" >Thống Kê</li>
                                 </ul>
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;"> Chủ Đề Hữu Ích</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;"> Chủ Đề Hữu Ích
+                                    </li>
                                     <li class="li-row">Mua AppleCare+</li>
                                     <li class="li-row">Tài Khoản và Mật Khẩu Apple</li>
                                     <li class="li-row">Thanh Toán & Gói Đăng Ký</li>
@@ -343,9 +432,18 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a href="#" class="nav-link"><i
-                                class="fa-solid fa-magnifying-glass fa-lg"></i></a></li>
-                    <li class="nav-item"><a href="apple_bag.php" class="nav-link"><i class="fa-solid fa-bag-shopping fa-lg"></i></a>
+                    <ul style="list-style-type: none;">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link search-icon"><i
+                                    class="fa-solid fa-magnifying-glass fa-lg"></i></a>
+                        </li>
+                        <li class="nav-item search-box">
+                            <input type="text" id="search-input" class="form-control"
+                                placeholder="Tìm kiếm sản phẩm...">
+                        </li>
+                    </ul>
+                    <li class="nav-item"><a href="apple_bag.php" class="nav-link"><i
+                                class="fa-solid fa-bag-shopping fa-lg"></i></a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -353,13 +451,13 @@
                             <i class="fa-solid fa-user fa-lg"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                        <?php if(isset($_SESSION['user_name']) && isset($_SESSION['role'])): ?>
+                            <?php if (isset($_SESSION['user_name']) && isset($_SESSION['role'])): ?>
                                 <li><span class="dropdown-item">Hi, <?php echo $_SESSION['user_name']; ?>!</span></li>
                                 <li><a class="dropdown-item" href="apple_logout.php">Đăng Xuất</a></li>
                             <?php else: ?>
                                 <li><a class="dropdown-item" href="apple_login.php">Đăng Nhập</a></li>
                                 <li><a class="dropdown-item" href="apple_register.php">Đăng Ký</a></li>
-                        <?php endif; ?>
+                            <?php endif; ?>
                         </ul>
                     </li>
                 </ul>
@@ -368,7 +466,8 @@
                 </ul>
             </div>
         </div>
-  </nav>
+    </nav>
+    <ul id="search-results"></ul>
 
     <main class="main" role="main">
         <!-- Top Module (Video Header) -->
@@ -422,11 +521,12 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="product-image-container" style="margin-bottom:10px">
-                            <img src="../assets/img/hero_iphone16pro_avail__fnf0f9x70jiy_largetall.jpg" class="img-fluid"
-                                alt="iPhone 16 Pro">
+                            <img src="../assets/img/hero_iphone16pro_avail__fnf0f9x70jiy_largetall.jpg"
+                                class="img-fluid" alt="iPhone 16 Pro">
                             <div class="product-description text-light">
                                 <h5 class="product-title text-light">iPhone 16 Pro</h5>
-                                <p class="product-text text-light ">Apple Intelligence hiện đã khả dụng với tiếng Anh</p>
+                                <p class="product-text text-light ">Apple Intelligence hiện đã khả dụng với tiếng Anh
+                                </p>
                                 <div class="product-buttons">
                                     <a href="#" class="btn btn-primary rounded-pill">Tìm hiểu thêm</a>
                                     <a href="#" class="btn btn-outline-primary rounded-pill">Mua</a>
@@ -517,7 +617,7 @@
                         </div>
                     </div>
             </section>
-            
+
             <section class="product-section mb-1">
                 <div class="row gx-1">
                     <div class="col-md-6">
@@ -537,7 +637,8 @@
 
                     <div class="col-md-6">
                         <div class="product-image-container">
-                            <img src="../assets/img/promo_ipadair_ai__3fv1eitzqv6y_large.jpg" class="img-fluid" alt="iPad Air">
+                            <img src="../assets/img/promo_ipadair_ai__3fv1eitzqv6y_large.jpg" class="img-fluid"
+                                alt="iPad Air">
                             <div class="product-description">
                                 <h5 class="product-title">iPad Air</h5>
                                 <p class="product-text">Hai Kịch ồ. Chip nhanh hơn. Đa zi năng.</p>
@@ -613,30 +714,91 @@
         </div>
     </main>
 
-
-
-    <footer style="text-align: left;padding-bottom:30px; padding-left: 300px; padding-right: 250px; background-color:rgb(227, 227, 237);">
+    <footer
+        style="text-align: left;padding-bottom:30px; padding-left: 300px; padding-right: 250px; background-color:rgb(227, 227, 237);">
         <br>
-        <p style="color:rgb(106, 106, 108);">* Nay có hai phiên bản: AirPods 4 và AirPods 4 với Chủ Động Khử Tiếng Ồn. <br>
-           Phiên bản beta của Apple Intelligence khả dụng trên tất cả các phiên bản iPhone 16, iPhone 15 Pro, iPhone 15 Pro Max, iPad mini (A17 Pro), iPad và Mac với M1 trở lên, với Siri<br>
-           và ngôn ngữ thiết bị được thiết lập là tiếng Anh (Úc, Canada, Ireland, New Zealand, Nam Phi, Vương quốc Anh hoặc Mỹ), trên một bản cập nhật phần mềm iOS 18, iPadOS 18 và <br>
-           macOS Sequoia. Một số tính năng bổ sung và hỗ trợ ngôn ngữ tiếng Trung (Giản thể), tiếng Anh (Ấn Độ, Singapore), tiếng Pháp, tiếng Đức, tiếng Ý, tiếng Nhật, tiếng Hàn, tiếng <br>
-           Bồ Đào Nha (Brazil), tiếng Tây Ban Nha sẽ ra mắt vào đầu tháng 4, và nhiều ngôn ngữ khác, bao gồm cả tiếng Việt sẽ ra mắt trong năm nay. Một số tính năng không khả dụng ở <br>
-           một số khu vực hoặc ngôn ngữ. <br>
-           Apple TV+ yêu cầu đăng ký thuê bao.<br>
-           Một số tính năng có thể thay đổi. Một số tính năng, ứng dụng và dịch vụ chỉ khả dụng ở một số khu vực hoặc ngôn ngữ.</p>
+        <p style="color:rgb(106, 106, 108);">* Nay có hai phiên bản: AirPods 4 và AirPods 4 với Chủ Động Khử Tiếng Ồn.
+            <br>
+            Phiên bản beta của Apple Intelligence khả dụng trên tất cả các phiên bản iPhone 16, iPhone 15 Pro, iPhone 15
+            Pro Max, iPad mini (A17 Pro), iPad và Mac với M1 trở lên, với Siri<br>
+            và ngôn ngữ thiết bị được thiết lập là tiếng Anh (Úc, Canada, Ireland, New Zealand, Nam Phi, Vương quốc Anh
+            hoặc Mỹ), trên một bản cập nhật phần mềm iOS 18, iPadOS 18 và <br>
+            macOS Sequoia. Một số tính năng bổ sung và hỗ trợ ngôn ngữ tiếng Trung (Giản thể), tiếng Anh (Ấn Độ,
+            Singapore), tiếng Pháp, tiếng Đức, tiếng Ý, tiếng Nhật, tiếng Hàn, tiếng <br>
+            Bồ Đào Nha (Brazil), tiếng Tây Ban Nha sẽ ra mắt vào đầu tháng 4, và nhiều ngôn ngữ khác, bao gồm cả tiếng
+            Việt sẽ ra mắt trong năm nay. Một số tính năng không khả dụng ở <br>
+            một số khu vực hoặc ngôn ngữ. <br>
+            Apple TV+ yêu cầu đăng ký thuê bao.<br>
+            Một số tính năng có thể thay đổi. Một số tính năng, ứng dụng và dịch vụ chỉ khả dụng ở một số khu vực hoặc
+            ngôn ngữ.</p>
         <hr>
         <p>Xem thêm cách để mua hàng: <a href="">Tìm cửa hàng bán lẻ gần bạn</a> . Hoặc gọi <u>1800 1192</u> .</p>
         <hr>
         <p>Bản quyền © Apple Inc. 2025 Bảo lưu mọi quyền.</p>
         <p><a href="">Chính Sách Quyền Riêng Tư</a> | <a href="">Điều Khoản Sử Dụng</a> | <a href="">Bán Hàng Và Hoàn
                 Tiền</a> | <a href="">Pháp Lý</a> | <a href="">Bản Đồ Trang Web</a></p>
-        <p style="color:rgb(159, 159, 160);">ĐKKD số 0313510827, do Sở KH&ĐT thành phố Hồ Chí Minh cấp ngày 28 tháng 10 năm 2015 <br>
-           Giấy phép kinh doanh số 0313510827/KD-0137 do Sở Công Thương thành phố Hồ Chí Minh cấp ngày 23 tháng 5 năm 2018 <br>
-           Địa chỉ: Phòng 901, Ngôi Nhà Đức Tại Tp. Hồ Chí Minh, số 33, đường Lê Duẩn, Phường Bến Nghé, Quận 1, thành phố Hồ Chí Minh, Việt Nam <br>
-           Điện thoại: 1800 1192</p>
-        <img src="https://www.apple.com/vn/home/globalfooter/logo-local-compliance.png" style="width: 125px; height: 40px;" alt="">
+        <p style="color:rgb(159, 159, 160);">ĐKKD số 0313510827, do Sở KH&ĐT thành phố Hồ Chí Minh cấp ngày 28 tháng 10
+            năm 2015 <br>
+            Giấy phép kinh doanh số 0313510827/KD-0137 do Sở Công Thương thành phố Hồ Chí Minh cấp ngày 23 tháng 5 năm
+            2018 <br>
+            Địa chỉ: Phòng 901, Ngôi Nhà Đức Tại Tp. Hồ Chí Minh, số 33, đường Lê Duẩn, Phường Bến Nghé, Quận 1, thành
+            phố Hồ Chí Minh, Việt Nam <br>
+            Điện thoại: 1800 1192</p>
+        <img src="https://www.apple.com/vn/home/globalfooter/logo-local-compliance.png"
+            style="width: 125px; height: 40px;" alt="">
     </footer>
+    <script>
+        document.querySelector(".search-icon").addEventListener("click", function (e) {
+            e.preventDefault();
+            document.querySelector(".search-box").classList.toggle("active");
+        });
+
+        document.getElementById("search-input").addEventListener("input", function () {
+            let keyword = this.value.trim();
+            let resultsContainer = document.getElementById("search-results");
+
+            if (keyword.length > 1) {
+                fetch(`apple_search.php?query=${encodeURIComponent(keyword)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.length > 0) {
+                            let resultHTML = data.map(p => `
+                        <li class="search-item" data-id="${p.id}" style="">
+                            <img src="${p.image_url}" alt="${p.name}" class="search-image" style="">
+                            <div class="search-info">
+                                <span class="search-name">${p.name}</span>
+                                <span class="search-price">${p.price}đ</span>
+                            </div>
+                        </li>
+                    `).join("");
+
+                            resultsContainer.innerHTML = resultHTML;
+                            resultsContainer.style.display = "block";
+
+                            // Thêm sự kiện click vào mỗi item để điều hướng
+                            document.querySelectorAll(".search-item").forEach(item => {
+                                item.addEventListener("click", function () {
+                                    let productId = this.getAttribute("data-id");
+                                    window.location.href = `apple_order-test.php?id=${productId}`;
+                                });
+                            });
+
+                        } else {
+                            resultsContainer.innerHTML = "<li>Không tìm thấy sản phẩm</li>";
+                            resultsContainer.style.display = "block";
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Lỗi:", error);
+                        resultsContainer.innerHTML = "<li>Có lỗi xảy ra!</li>";
+                        resultsContainer.style.display = "block";
+                    });
+            } else {
+                resultsContainer.innerHTML = "";
+                resultsContainer.style.display = "none";
+            }
+        });
+    </script>
 </body>
 
 </html>
