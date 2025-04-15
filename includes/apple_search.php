@@ -26,6 +26,5 @@ if ($query !== '') {
     echo json_encode($products);
 }
 
-
 $conn->close();
 ?>

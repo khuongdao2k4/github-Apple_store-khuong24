@@ -134,6 +134,18 @@ while ($row = $total_result->fetch_assoc()) {
 			border-top: 1px solid #ddd;
 			padding-top: 1rem;
 		}
+        .submenu-container {
+            position: fixed;
+            top: 50px;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0);
+            /* Ban đầu trong suốt */
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+        }
     </style>
 </head>
 <body>

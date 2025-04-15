@@ -17,6 +17,13 @@ session_start();
         integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="../assets/js/js-apple_store.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         /* search */
         .search-box {
@@ -87,6 +94,19 @@ session_start();
         .search-price {
             font-size: 17px;
             color: #888;
+        }
+
+        .submenu-container {
+            position: fixed;
+            top: 50px;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0);
+            /* Ban đầu trong suốt */
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
         }
     </style>
 </head>
@@ -224,7 +244,8 @@ session_start();
                                 </ul>
                                 <ul>
                                     <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Mua iPhone</li>
-                                    <li class="li-row" onclick="location.href='apple_mua-iphone.php'" style="cursor: pointer;">Mua iPhone</li>
+                                    <li class="li-row" onclick="location.href='apple_mua-iphone.php'"
+                                        style="cursor: pointer;">Mua iPhone</li>
                                     <li class="li-row">Phụ Kiện iPhone</li>
                                     <li class="li-row">Apple Trade In </li>
                                     <li class="li-row">Tài Chính</li>
@@ -418,7 +439,7 @@ session_start();
                                     <li class="li-row">Cộng Đồng</li>
                                     <li class="li-row">Kiểm Tra Bảo Hành</li>
                                     <li class="li-row">Sửa Chữa</li>
-                                    <li class="li-row" onclick="location.href='apple_statistics.php'" >Thống Kê</li>
+                                    <li class="li-row" onclick="location.href='apple_statistics.php'">Thống Kê</li>
                                 </ul>
                                 <ul>
                                     <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;"> Chủ Đề Hữu Ích
@@ -452,7 +473,7 @@ session_start();
                             <i class="fa-solid fa-user fa-lg"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                        <?php if(isset($_SESSION['user_name']) && isset($_SESSION['role'])): ?>
+                            <?php if (isset($_SESSION['user_name']) && isset($_SESSION['role'])): ?>
                                 <li><span class="dropdown-item">Hi, <?php echo $_SESSION['user_name']; ?>!</span></li>
                                 <li><a class="dropdown-item" href="apple_logout.php">Đăng Xuất</a></li>
                             <?php else: ?>
@@ -721,22 +742,50 @@ session_start();
     </section>
 
 
-    <footer style="text-align: left;padding-bottom:30px; padding-left: 300px; padding-right: 150px; background-color:rgb(227, 227, 237);">
+
+
+    <footer
+        style="text-align: left;padding-bottom:30px; padding-left: 300px; padding-right: 150px; background-color:rgb(227, 227, 237);">
         <br>
-        <p style="color:rgb(106, 106, 108);">* Trade‑in values may vary, and are based on the condition and model of your trade‑in device. Additional trade‑in values require purchase of a new iPhone, subject to availability  and limits. Must be at least 18. Offer may not be available in all stores and not all devices are eligible for credit. Apple or its trade-in partners reserve the right to refuse or limit any Trade In transaction for any reason. In‑store trade‑in requires presentation of a valid, government‑issued photo ID (local law may require saving this information). Sales tax may be assessed on full value of new iPhone. Value of your current device may be applied toward purchase of a new Apple device. Additional terms from Apple or Apple’s trade‑in partners may apply. See <u>apple.com/shop/trade-in </u> for more information. <br> 
-        <br>
-        ** Pricing for iPhone 16 and iPhone 16 Plus includes a $30 connectivity discount that requires activation with AT&T, Boost Mobile, T‑Mobile, or Verizon. Pricing shown for iPhone 15 and iPhone 15 Plus includes a $30 connectivity discount for Boost Mobile, T‑Mobile, and Verizon customers that requires activation and would otherwise be $30 higher for all other customers. Financing available to qualified customers, subject to credit approval and credit limit, and requires you to select Citizens One Apple iPhone Payments or Apple Card Monthly Installments (ACMI) as your payment type at checkout at Apple. You’ll need to select AT&T, Boost Mobile, T‑Mobile, or Verizon as your carrier when you checkout. An iPhone purchased with ACMI is always unlocked, so you can switch carriers at any time, subject to your carrier’s terms. Taxes and shipping on items purchased using ACMI are subject to your card’s variable APR, not the ACMI 0% APR. ACMI is not available for purchases made online at special storefronts. The last month’s payment for each product will be the product’s purchase price, less all other payments at the monthly payment amount. ACMI financing is subject to change at any time for any reason, including but not limited to, installment term lengths and eligible products. See the Apple Card Customer Agreement for more information about ACMI. Additional Citizens One Apple iPhone Payments terms are here.</p>
+        <p style="color:rgb(106, 106, 108);">* Trade‑in values may vary, and are based on the condition and model of
+            your trade‑in device. Additional trade‑in values require purchase of a new iPhone, subject to availability
+            and limits. Must be at least 18. Offer may not be available in all stores and not all devices are eligible
+            for credit. Apple or its trade-in partners reserve the right to refuse or limit any Trade In transaction for
+            any reason. In‑store trade‑in requires presentation of a valid, government‑issued photo ID (local law may
+            require saving this information). Sales tax may be assessed on full value of new iPhone. Value of your
+            current device may be applied toward purchase of a new Apple device. Additional terms from Apple or Apple’s
+            trade‑in partners may apply. See <u>apple.com/shop/trade-in </u> for more information. <br>
+            <br>
+            ** Pricing for iPhone 16 and iPhone 16 Plus includes a $30 connectivity discount that requires activation
+            with AT&T, Boost Mobile, T‑Mobile, or Verizon. Pricing shown for iPhone 15 and iPhone 15 Plus includes a $30
+            connectivity discount for Boost Mobile, T‑Mobile, and Verizon customers that requires activation and would
+            otherwise be $30 higher for all other customers. Financing available to qualified customers, subject to
+            credit approval and credit limit, and requires you to select Citizens One Apple iPhone Payments or Apple
+            Card Monthly Installments (ACMI) as your payment type at checkout at Apple. You’ll need to select AT&T,
+            Boost Mobile, T‑Mobile, or Verizon as your carrier when you checkout. An iPhone purchased with ACMI is
+            always unlocked, so you can switch carriers at any time, subject to your carrier’s terms. Taxes and shipping
+            on items purchased using ACMI are subject to your card’s variable APR, not the ACMI 0% APR. ACMI is not
+            available for purchases made online at special storefronts. The last month’s payment for each product will
+            be the product’s purchase price, less all other payments at the monthly payment amount. ACMI financing is
+            subject to change at any time for any reason, including but not limited to, installment term lengths and
+            eligible products. See the Apple Card Customer Agreement for more information about ACMI. Additional
+            Citizens One Apple iPhone Payments terms are here.
+        </p>
         <hr style="padding-left: 300px; padding-right: 150px;">
         <p>Xem thêm cách để mua hàng: <a href="">Tìm cửa hàng bán lẻ gần bạn</a> . Hoặc gọi <u>1800 1192</u> .</p>
         <hr>
         <p>Bản quyền © Apple Inc. 2025 Bảo lưu mọi quyền.</p>
         <p><a href="">Chính Sách Quyền Riêng Tư</a> | <a href="">Điều Khoản Sử Dụng</a> | <a href="">Bán Hàng Và Hoàn
                 Tiền</a> | <a href="">Pháp Lý</a> | <a href="">Bản Đồ Trang Web</a></p>
-        <p style="color:rgb(159, 159, 160);">ĐKKD số 0313510827, do Sở KH&ĐT thành phố Hồ Chí Minh cấp ngày 28 tháng 10 năm 2015 <br>
-           Giấy phép kinh doanh số 0313510827/KD-0137 do Sở Công Thương thành phố Hồ Chí Minh cấp ngày 23 tháng 5 năm 2018 <br>
-           Địa chỉ: Phòng 901, Ngôi Nhà Đức Tại Tp. Hồ Chí Minh, số 33, đường Lê Duẩn, Phường Bến Nghé, Quận 1, thành phố Hồ Chí Minh, Việt Nam <br>
-           Điện thoại: 1800 1192</p>
-        <img src="https://www.apple.com/vn/home/globalfooter/logo-local-compliance.png" style="width: 125px; height: 40px;" alt="">
+        <p style="color:rgb(159, 159, 160);">ĐKKD số 0313510827, do Sở KH&ĐT thành phố Hồ Chí Minh cấp ngày 28 tháng 10
+            năm 2015 <br>
+            Giấy phép kinh doanh số 0313510827/KD-0137 do Sở Công Thương thành phố Hồ Chí Minh cấp ngày 23 tháng 5 năm
+            2018 <br>
+            Địa chỉ: Phòng 901, Ngôi Nhà Đức Tại Tp. Hồ Chí Minh, số 33, đường Lê Duẩn, Phường Bến Nghé, Quận 1, thành
+            phố Hồ Chí Minh, Việt Nam <br>
+            Điện thoại: 1800 1192</p>
+        <img src="https://www.apple.com/vn/home/globalfooter/logo-local-compliance.png"
+            style="width: 125px; height: 40px;" alt="">
     </footer>
     <script>
         document.querySelector(".search-icon").addEventListener("click", function (e) {
@@ -788,6 +837,90 @@ session_start();
                 resultsContainer.innerHTML = "";
                 resultsContainer.style.display = "none";
             }
+        });
+    </script>
+
+    <script>
+        const pauseButton = document.querySelector('.pause-button');
+        const video = document.querySelector('.video-container video');
+
+        if (video.readyState >= 2) {
+            video.play();
+        } else {
+            video.addEventListener('loadeddata', () => {
+                video.play();
+            });
+        }
+        pauseButton.addEventListener('click', function () {
+            if (video.paused) {
+                video.play();
+                this.innerHTML = '<i class="fa fa-pause" aria-hidden="true"></i>';
+                this.setAttribute('aria-label', 'Pause video');
+            } else {
+                video.pause();
+                this.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>';
+                this.setAttribute('aria-label', 'Play video');
+            }
+        });
+        $(document).ready(function () {
+            $('.image-carousel').slick({
+                infinite: false, //Prevent infinite loop
+                slidesToShow: 4, // Show 4 images
+                slidesToScroll: 1,
+                arrows: true, // Enable navigation arrows
+                dots: false,  // Remove dots if you want
+                responsive: [
+                    {
+                        breakpoint: 992,
+                        settings: {
+                            slidesToShow: 3
+                        }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 2
+                        }
+                    },
+                    {
+                        breakpoint: 576,
+                        settings: {
+                            slidesToShow: 1
+                        }
+                    }
+                ]
+            });
+        });
+
+
+        $(document).ready(function () {
+            $('.image-carousel-icon').slick({
+                infinite: false,
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                arrows: true,
+                dots: false,
+                responsive: [
+                    {
+                        breakpoint: 992,
+                        settings: {
+                            slidesToShow: 3
+                        }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 2
+                        }
+                    },
+                    {
+                        breakpoint: 576,
+                        settings: {
+                            slidesToShow: 1
+                        }
+                    }
+                ]
+            });
         });
     </script>
 </body>

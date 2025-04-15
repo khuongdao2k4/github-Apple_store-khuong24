@@ -22,13 +22,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "<script>alert('Lỗi khi thêm sản phẩm!'); window.history.back();</script>";
     }
-    
+
     $stmt->close();
     $conn->close();
 }
 ?>
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -107,26 +108,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             width: 150px;
             border-radius: 10px;
         }
-        .add-product-container {
-    max-width: 500px;
-    margin: 50px auto;
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-}
-footer {
-    padding-left: 50px;
-    padding-right: 50px;
-    font-size: 12px;
-    text-align: center;
-}
 
-footer a {
-    color: black;
-    text-decoration: none;
-}
-/* search */
-.search-box {
+        .add-product-container {
+            max-width: 500px;
+            margin: 50px auto;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        footer {
+            padding-left: 50px;
+            padding-right: 50px;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        footer a {
+            color: black;
+            text-decoration: none;
+        }
+
+        /* search */
+        .search-box {
             position: absolute;
             top: 7px;
             right: -250px;
@@ -195,18 +199,34 @@ footer a {
             font-size: 17px;
             color: #888;
         }
+
+        .submenu-container {
+            position: fixed;
+            top: 50px;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0);
+            /* Ban đầu trong suốt */
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+        }
     </style>
 </head>
+
 <body>
-<nav class="navbar navbar-expand-lg fixed-top">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item"; style="padding: 0px 10px"><a class="nav-link" href="apple_home.php"><i class="fa-brands fa-apple fa-xl"></i></a></li>
-                    <li class="nav-item"; style="padding: 0px 10px"><a class="nav-link" href="apple_home.php">Cửa Hàng</a>
+                    <li class="nav-item" ; style="padding: 0px 10px"><a class="nav-link" href="apple_home.php"><i
+                                class="fa-brands fa-apple fa-xl"></i></a></li>
+                    <li class="nav-item" ; style="padding: 0px 10px"><a class="nav-link" href="apple_home.php">Cửa
+                            Hàng</a>
                         <div class="submenu-container">
                             <div class="submenu">
                                 <ul>
@@ -234,7 +254,7 @@ footer a {
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item"; style="padding: 0px 10px"><a class="nav-link" href="apple_mac.php">Mac</a>
+                    <li class="nav-item" ; style="padding: 0px 10px"><a class="nav-link" href="apple_mac.php">Mac</a>
                         <div class="submenu-container">
                             <div class="submenu">
                                 <ul>
@@ -274,7 +294,7 @@ footer a {
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item"; style="padding: 0px 10px"><a class="nav-link" href="#">iPad</a>
+                    <li class="nav-item" ; style="padding: 0px 10px"><a class="nav-link" href="#">iPad</a>
                         <div class="submenu-container">
                             <div class="submenu">
                                 <ul>
@@ -311,7 +331,8 @@ footer a {
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item"; style="padding: 0px 10px"><a class="nav-link" href="apple_store.php">iPhone</a>
+                    <li class="nav-item" ; style="padding: 0px 10px"><a class="nav-link"
+                            href="apple_store.php">iPhone</a>
                         <div class="submenu-container">
                             <div class="submenu">
                                 <ul>
@@ -327,7 +348,8 @@ footer a {
                                 </ul>
                                 <ul>
                                     <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Mua iPhone</li>
-                                    <li class="li-row" onclick="location.href='apple_mua-iphone.php'" style="cursor: pointer;">Mua iPhone</li>
+                                    <li class="li-row" onclick="location.href='apple_mua-iphone.php'"
+                                        style="cursor: pointer;">Mua iPhone</li>
                                     <li class="li-row">Phụ Kiện iPhone</li>
                                     <li class="li-row">Apple Trade In </li>
                                     <li class="li-row">Tài Chính</li>
@@ -347,11 +369,12 @@ footer a {
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item"; style="padding: 0px 10px"><a class="nav-link" href="#">Watch</a>
-                    <div class="submenu-container">
+                    <li class="nav-item" ; style="padding: 0px 10px"><a class="nav-link" href="#">Watch</a>
+                        <div class="submenu-container">
                             <div class="submenu">
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá Watch</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá Watch
+                                    </li>
                                     <li class="li-rowh">Khám Phá Tất Cả Apple Watch</li>
                                     <li class="li-rowh">Apple Watch Series 10</li>
                                     <li class="li-rowh">Apple Watch Ultra 2</li>
@@ -370,7 +393,8 @@ footer a {
                                     <li class="li-row">Tài Chính</li>
                                 </ul>
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Tìm Hiểu Thêm Về Watch</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Tìm Hiểu Thêm Về
+                                        Watch</li>
                                     <li class="li-row">Hỗ Trợ Watch</li>
                                     <li class="li-row">AppleCare+</li>
                                     <li class="li-row">watchOS 11</li>
@@ -379,11 +403,12 @@ footer a {
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item"; style="padding: 0px 10px"><a class="nav-link" href="#">AirPods</a>
-                    <div class="submenu-container">
+                    <li class="nav-item" ; style="padding: 0px 10px"><a class="nav-link" href="#">AirPods</a>
+                        <div class="submenu-container">
                             <div class="submenu">
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá AirPods</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá AirPods
+                                    </li>
                                     <li class="li-rowh">Khám Phá Tất Cả AirPods</li>
                                     <li class="li-rowh">AirPods 4</li>
                                     <li class="li-rowh">AirPods Pro 2</li>
@@ -396,7 +421,8 @@ footer a {
                                     <li class="li-row">Phụ Kiện AirPods</li>
                                 </ul>
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Tìm Hiểu Thêm Về AirPods</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Tìm Hiểu Thêm Về
+                                        AirPods</li>
                                     <li class="li-row">Hỗ Trợ AirPods</li>
                                     <li class="li-row">AppleCare+ cho Tai Nghe</li>
                                     <li class="li-row">Apple Music</li>
@@ -404,21 +430,24 @@ footer a {
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item"; style="padding: 0px 10px"><a class="nav-link" href="#">TV & Nhà</a>
-                    <div class="submenu-container">
+                    <li class="nav-item" ; style="padding: 0px 10px"><a class="nav-link" href="#">TV & Nhà</a>
+                        <div class="submenu-container">
                             <div class="submenu">
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá TV & Nhà</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá TV &
+                                        Nhà</li>
                                     <li class="li-rowh">Khám Phá TV & Nhà</li>
                                     <li class="li-rowh">Apple TV 4K</li>
                                 </ul>
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Mua TV & Nhà</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Mua TV & Nhà
+                                    </li>
                                     <li class="li-row">Mua Apple TV 4K</li>
                                     <li class="li-row">Mua Phụ Kiện TV & Nhà</li>
                                 </ul>
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Tìm Hiểu Thêm Về TV & Nhà</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Tìm Hiểu Thêm Về
+                                        TV & Nhà</li>
                                     <li class="li-row">Hỗ Trợ Apple TV</li>
                                     <li class="li-row">AppleCare+</li>
                                     <li class="li-row">Ứng Dụng Apple TV</li>
@@ -429,11 +458,12 @@ footer a {
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item"; style="padding: 0px 10px"><a class="nav-link" href="#">Giải Trí</a>
-                    <div class="submenu-container">
+                    <li class="nav-item" ; style="padding: 0px 10px"><a class="nav-link" href="#">Giải Trí</a>
+                        <div class="submenu-container">
                             <div class="submenu">
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá Giải Trí</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá Giải
+                                        Trí</li>
                                     <li class="li-rowh">Khám Phá Giải Trí</li>
                                     <li class="li-rowh">Apple One</li>
                                     <li class="li-rowh">Apple TV+</li>
@@ -460,11 +490,12 @@ footer a {
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item"; style="padding: 0px 10px"><a class="nav-link" href="#">Phụ Kiện</a>
-                    <div class="submenu-container">
+                    <li class="nav-item" ; style="padding: 0px 10px"><a class="nav-link" href="#">Phụ Kiện</a>
+                        <div class="submenu-container">
                             <div class="submenu">
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Mua Phụ Kiện</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Mua Phụ Kiện
+                                    </li>
                                     <li class="li-rowh">Mua Tất Cả Phụ Kiện</li>
                                     <li class="li-rowh">Mac</li>
                                     <li class="li-rowh">iPad</li>
@@ -474,7 +505,8 @@ footer a {
                                     <li class="li-rowh">TV & Nhà</li>
                                 </ul>
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá Phụ Kiện</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá Phụ
+                                        Kiện</li>
                                     <li class="li-row">Sản Xuất Bởi Apple</li>
                                     <li class="li-row">Beats by Dr. Dre</li>
                                     <li class="li-row">AirTag</li>
@@ -491,11 +523,12 @@ footer a {
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item"; style="padding: 0px 10px"><a class="nav-link" href="#">Hỗ Trợ</a>
-                    <div class="submenu-container">
+                    <li class="nav-item" ; style="padding: 0px 10px"><a class="nav-link" href="#">Hỗ Trợ</a>
+                        <div class="submenu-container">
                             <div class="submenu">
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá Hỗ Trợ</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;">Khám Phá Hỗ Trợ
+                                    </li>
                                     <li class="li-rowh">iPhone</li>
                                     <li class="li-rowh">Mac</li>
                                     <li class="li-rowh">iPad</li>
@@ -510,10 +543,11 @@ footer a {
                                     <li class="li-row">Cộng Đồng</li>
                                     <li class="li-row">Kiểm Tra Bảo Hành</li>
                                     <li class="li-row">Sửa Chữa</li>
-                                    <li class="li-row" onclick="location.href='apple_statistics.php'" >Thống Kê</li>
+                                    <li class="li-row" onclick="location.href='apple_statistics.php'">Thống Kê</li>
                                 </ul>
                                 <ul>
-                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;"> Chủ Đề Hữu Ích</li>
+                                    <li class="header-li" style="color: #6E6E73; padding-bottom: 10px;"> Chủ Đề Hữu Ích
+                                    </li>
                                     <li class="li-row">Mua AppleCare+</li>
                                     <li class="li-row">Tài Khoản và Mật Khẩu Apple</li>
                                     <li class="li-row">Thanh Toán & Gói Đăng Ký</li>
@@ -543,7 +577,7 @@ footer a {
                             <i class="fa-solid fa-user fa-lg"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                        <?php if(isset($_SESSION['user_name']) && isset($_SESSION['role'])): ?>
+                            <?php if (isset($_SESSION['user_name']) && isset($_SESSION['role'])): ?>
                                 <li><span class="dropdown-item">Hi, <?php echo $_SESSION['user_name']; ?>!</span></li>
                                 <li><a class="dropdown-item" href="apple_logout.php">Đăng Xuất</a></li>
                             <?php else: ?>
@@ -560,9 +594,9 @@ footer a {
         </div>
     </nav>
     <ul id="search-results"></ul>
-  <h5 style="font-weight: bold; padding-left: 300px; padding-top: 10px;">Thêm Sản Phẩm </h5>
+    <h5 style="font-weight: bold; padding-left: 300px; padding-top: 10px;">Thêm Sản Phẩm </h5>
 
-  <div class="banner">
+    <div class="banner">
         <div class="text-content">
             <h1>Phối. Hợp. MagSafe.</h1>
             <p>Gắn thêm ốp lưng, ví hoặc bộ sạc không dây.</p>
@@ -573,7 +607,7 @@ footer a {
     <div class="add-product-container">
         <h2>Thêm Sản Phẩm</h2>
         <br>
-        <?php 
+        <?php
         if (isset($_GET['message'])) {
             echo '<div class="alert alert-success">' . htmlspecialchars($_GET['message']) . '</div>';
         }
@@ -581,27 +615,31 @@ footer a {
         <form action="apple_add-product.php" method="POST">
 
             <div class="row mb-3">
-                     <input style="border-radius:20px" type="text" class="form-control" id="name" name="name" placeholder="Tên Sản Phẩm" required>
-            </div>  
+                <input style="border-radius:20px" type="text" class="form-control" id="name" name="name"
+                    placeholder="Tên Sản Phẩm" required>
+            </div>
 
             <div class="row mb-3">
-                     <input style="border-radius:20px" type="url" class="form-control" id="image_url" name="image_url" placeholder="URL Image" required>
-            </div> 
+                <input style="border-radius:20px" type="url" class="form-control" id="image_url" name="image_url"
+                    placeholder="URL Image" required>
+            </div>
 
             <div class="row mb-3">
-                     <input style="border-radius:20px" type="text" class="form-control" id="colors" name="colors" placeholder="Color" required>
-            </div> 
+                <input style="border-radius:20px" type="text" class="form-control" id="colors" name="colors"
+                    placeholder="Color" required>
+            </div>
 
             <div class="row mb-3">
-                     <input style="border-radius:20px" type="text" class="form-control" id="price" name="price" placeholder="Price" required>
-            </div> 
+                <input style="border-radius:20px" type="text" class="form-control" id="price" name="price"
+                    placeholder="Price" required>
+            </div>
 
             <div class="d-grid">
-              <button style="border-radius:20px" type="submit" class="btn btn-primary ">Thêm sản phẩm</button>  
-            </div>  
+                <button style="border-radius:20px" type="submit" class="btn btn-primary ">Thêm sản phẩm</button>
+            </div>
         </form>
     </div>
-    
+
     <footer>
         <hr>
         <p>Find a retailer near you.</p>
@@ -662,4 +700,5 @@ footer a {
         });
     </script>
 </body>
+
 </html>

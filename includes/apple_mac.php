@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
 	<title>Mac - Apple(VN)</title>
 	<link rel="stylesheet" href="../assets/css/apple_store-styles.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -239,6 +240,18 @@
 			font-size: 17px;
 			color: #888;
 		}
+		.submenu-container {
+            position: fixed;
+            top: 50px;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0);
+            /* Ban đầu trong suốt */
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+        }
 	</style>
 </head>
 

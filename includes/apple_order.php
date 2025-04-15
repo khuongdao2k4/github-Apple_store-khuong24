@@ -309,6 +309,18 @@ $result = $conn->query($sql);
             color: black;
             text-decoration: none;
         }
+        .submenu-container {
+            position: fixed;
+            top: 50px;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0);
+            /* Ban đầu trong suốt */
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+        }
     </style>
 </head>
 
